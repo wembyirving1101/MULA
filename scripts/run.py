@@ -28,6 +28,20 @@ def responds(url, statuses=(200,), headers=None):
         return False
 
 
+def server_ready():
+    if not responds("http://127.0.0.1:8000/health"):
+        return False
+    # A server loaded before the folder migration can answer health checks but
+    # still hold imports and certificate paths from the removed virtualenv.
+    # GET checks route presence without authenticating or synthesizing speech.
+    if not responds("http://127.0.0.1:8000/api/speech", statuses=(405,)):
+        raise RuntimeError(
+            "An older or incompatible server is running on port 8000. "
+            "Stop its Terminal process, then run ./run.sh again to load server/src."
+        )
+    return responds("http://127.0.0.1:8000/api/auth/me", statuses=(401,))
+
+
 def stop_children(children):
     for name, process in reversed(children):
         if process.poll() is None:
@@ -94,8 +108,7 @@ def main():
                    lambda: responds(f"{hermes}/v1/capabilities", headers=headers), stack, children)
             launch("Server", [str(ROOT / "server/.venv/bin/python"), "-m", "uvicorn", "src.main:app",
                    "--host", "127.0.0.1", "--port", "8000", "--env-file", str(env_file)],
-                   ROOT / "server", lambda: responds("http://127.0.0.1:8000/health")
-                   and responds("http://127.0.0.1:8000/api/auth/me", statuses=(401,)), stack, children)
+                   ROOT / "server", server_ready, stack, children)
             launch("Client", ["node", str(ROOT / "node_modules/next/dist/bin/next"),
                    "dev", "--hostname", "127.0.0.1", "--port", "3000"], ROOT,
                    lambda: responds("http://127.0.0.1:3000/") and
