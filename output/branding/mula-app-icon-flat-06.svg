@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Mula dawn app icon</title>
+  <desc id="desc">A solid clay sunrise above a single horizon on charcoal.</desc>
+  <path fill="#171B1E" d="M0 0h1024v1024H0z"/>
+  <g fill="#CF947A">
+    <path d="M332 576a180 180 0 0 1 360 0Z"/>
+    <path d="M292 600h440v16H292z"/>
+  </g>
+</svg>

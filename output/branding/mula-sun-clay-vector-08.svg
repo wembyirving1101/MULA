@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="626" height="395" viewBox="314 419 626 395" role="img" aria-labelledby="title">
+  <title id="title">Mula striped dawn symbol</title>
+  <defs>
+    <clipPath id="sun-bands">
+      <path d="M380 419h494v197H380zM380 637h494v31H380zM380 688h494v26H380zM380 735h494v26H380z"/>
+    </clipPath>
+  </defs>
+  <g fill="#CF947A">
+    <circle cx="627" cy="664" r="245" clip-path="url(#sun-bands)"/>
+    <rect x="314" y="791" width="626" height="23" rx="11.5"/>
+  </g>
+</svg>

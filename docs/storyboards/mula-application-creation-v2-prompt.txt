@@ -1,0 +1,33 @@
+Generation method: built-in image_gen editing tool.
+Reference: mula-application-creation-v1.png.
+Purpose: professional Mula application creation storyboard with revised flow.
+
+Edit the supplied Mula graphical storyboard into a noticeably more PROFESSIONAL, polished product UX case-study board. Preserve the Mula business concept, Mie Pagi noodle-shop example, nine-scene story, clay #CF947A and charcoal #171B1E brand, supported-module architecture, optional AI hiring after launch. CHANGE the visual treatment and the specific UX flow below.
+
+Use case: ui-mockup / productivity-visual.
+Final image: high-resolution landscape editorial presentation board, ideally 3840x2560. EXACTLY 9 panels in a precisely aligned 3x3 grid with consistent whitespace. Reading order left to right, then next row. Small elegant Mula header and title "Build your business with Mula". Crisp professional sans-serif typography, dark headings, warm white canvas, charcoal top bars, subtle clay highlights, hairline separators, flat interface designs and small monochrome icons. Refined, credible SaaS product design. No cartoon people, manga, hand gestures, plants, laptops, giant decorative illustrations, gradients or 3D floating blocks. Replace those with generous actual app-interface mockups. Each panel has a small step number, clear heading, large UI scene and one short explanatory caption. All panels fully visible. Prioritize legible accurate text over decorative detail.
+
+CRUCIAL CONTENT CORRECTIONS:
+- Step 2 = PAGE STRUCTURE, not feature selection. Two ways to create the page structure: guided by Operator chat OR manually arranging supported page/section blocks. Show BOTH clearly as visible options and a resulting page hierarchy.
+- Former step 4 must come BEFORE former step 3. Renumber sequentially: new step 3 = brand/content personalization before generating previews; new step 4 = choose among five generated designs.
+- Step 5 = FEATURE STRUCTURE, an active conversation with the Operator ALONGSIDE the available feature catalog. Users describe desired functionality in their own words, while the available blocks are visible. If requested functionality doesn't exist yet, Operator explains this and can recommend a genuinely similar supported feature, honestly explaining the difference. It must not invent an unsupported capability. Don't make step 5 a checklist-only catalog.
+- Page structure in step 2 and functional capabilities in step 5 must look clearly distinct.
+- Customer service chat block = customer conversation interface + HUMAN support inbox. It does not automatically include an AI chatbot. Hiring a Customer Service Agent is separate and optional at the end.
+- No fake currency amounts or assumed billing periods; prices come from configured catalog.
+
+Exact nine panels:
+01 "Describe your business". Mula welcome conversation, prompt: "A noodle shop with online pickup orders." Button "Let's begin". One-line caption "Start with your business idea."
+02 "Structure your pages". UI tabs or two equally visible option cards: "Plan with Operator" and "Arrange manually". Guided side: Operator offers a page plan. Manual builder side: draggable page cards "Home", "Menu", "About", "Contact", with "Add page" and section blocks under Home such as "Hero", "Story", "Gallery". Use drag handles and page hierarchy, NOT order-processing modules. Concise caption "Build your page plan through chat or arrange it yourself."
+03 "Set your brand direction". Business fields "Mie Pagi", logo upload, clay/orange color swatches, tone "Warm and playful", image references, content inputs. Operator input "Warm colors and bold food photography." Do NOT show the five designs yet. Caption "Add your identity and preferences before designs are generated."
+04 "Choose a design". EXACTLY FIVE attractive miniature Mie Pagi website variations, numbered 1 through 5, with same agreed page structure. Second selected in clay outline. Clear CTA "Use this design". Caption "Five design options, built from your page plan and brand direction."
+05 "Shape your features". Prominent split view: LEFT Operator conversation, RIGHT "Available features" with cards "Pickup ordering", "Customer service chat" (subtitle "Human support inbox"), and "Contact form". Each supported card has Add and Price details labels. Conversation:
+Founder: "Can customers reserve a table?"
+Operator: "Table booking isn't available yet. A contact form can collect requests for your team to confirm manually."
+Founder: "Add that."
+The contact form suggestion must be clear it collects requests ONLY, with NO live availability, confirmed reservations, seat selection, or actual booking engine. Show supported Contact form card highlighted as added and a small "Table booking: unavailable" status in conversation only, not as an addable module. Include input field "Describe another feature..." Caption "Describe what you need and explore supported blocks together."
+06 "Review scope and cost". Summary with separate sections "Pages", "Features", "Price summary". Pages Home/Menu/About/Contact; Features Pickup ordering, Human support inbox, Contact form. Base plan + selected blocks; "View price details"; CTA "Confirm and create". No invented numeric pricing. Caption "Confirm the website, features and configured price."
+07 "Create your app". Realistic deployment/setup progress interface, not decorative block illustration: completed or progressing checklist "Apply design", "Connect selected features", "Prepare business workspace". Small coherent Mie Pagi website preview. Caption "Mula assembles and hosts your business app."
+08 "Review and publish". Tabs "Customer view" and "Business workspace". Side-by-side website test ordering interface and owner dashboard with human order management and support inbox. Primary button "Publish website". Caption "Try customer and team workflows before going live."
+09 "Start operating". Live site badge "Website live". Buttons "Visit website" and "Open workspace". Separate optional card "Need an extra pair of hands?" with "Customer Service Agent", brief "Connect an AI agent to your support inbox.", buttons "Explore agents" and "Maybe later". No agent is hired automatically, website already operates. Caption "Run it yourself, with your team, or hire an AI agent."
+
+Ensure correct numbering and order 01..09. Do not retain old scene 3/4 order. Professional UX communication: distinct page composition vs feature configuration. All text compact and legible. No watermarks.

@@ -1,0 +1,3 @@
+Created using built-in image generation.
+
+Edit the attached square Mula app icon. Change only the scale and placement of the complete orange sun emblem: uniformly scale both orange segments and their intervening gap to 80% of their current size, then precisely center the complete emblem horizontally and vertically on the square. The emblem should now span about 56% of the canvas width, with noticeably more plum breathing room. Preserve the exact silhouette, relative segment proportions, warm orange color, and the existing deep plum background color and appearance. Keep the square canvas filling the image edge to edge. No text, new elements, border, rounded outer corners, or mockup. Faithful minimal layout edit.

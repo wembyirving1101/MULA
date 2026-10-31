@@ -1,0 +1,5 @@
+Duration: 65.0 seconds
+Dimensions: (1920.0, 1080.0)
+Nominal frame rate: 120.0 fps
+Video samples: 7800
+Audio tracks: 1

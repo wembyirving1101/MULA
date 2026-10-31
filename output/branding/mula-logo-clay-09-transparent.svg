@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="640" viewBox="0 0 1600 640" role="img" aria-labelledby="title desc">
+  <title id="title">Mula logo</title>
+  <desc id="desc">Striped dawn symbol and lowercase mula wordmark in muted clay on charcoal.</desc>
+  <defs>
+    <clipPath id="sun-bands">
+      <path d="M380 419h494v197H380zM380 637h494v31H380zM380 688h494v26H380zM380 735h494v26H380z"/>
+    </clipPath>
+  </defs>
+  <g transform="translate(74 0)">
+  <g fill="#CF947A" transform="translate(230 196) scale(.58) translate(-314 -419)">
+    <circle cx="627" cy="664" r="245" clip-path="url(#sun-bands)"/>
+    <rect x="314" y="791" width="626" height="23" rx="11.5"/>
+  </g>
+  <g fill="none" stroke="#CF947A" stroke-width="24" stroke-linejoin="round">
+    <path d="M700 413V291M700 320C700 278 782 270 782 320V413M782 320C782 278 864 270 864 320V413"/>
+    <path d="M906 291V364C906 430 1002 430 1002 364V291"/>
+    <path d="M1052 232V413"/>
+    <path d="M1211 291V413M1211 352C1211 271 1097 271 1097 352C1097 433 1211 433 1211 352Z"/>
+  </g>
+  </g>
+</svg>

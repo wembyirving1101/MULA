@@ -1,0 +1,32 @@
+# Dedicated Mula Operator profile. Do not reuse a personal Hermes home.
+model:
+  default: huihui_ai/qwen3-abliterated:latest
+  provider: custom
+  base_url: http://127.0.0.1:11434/v1
+  # Actual Ollama window; the scoped Mula patch allows this tool-free profile.
+  context_length: 40960
+
+agent:
+  max_turns: 8
+  mula_compact_operator: true
+
+# Preserve the existing Operator scope. Enabling agents/tools is a separate
+# feature: define their business permissions and approval flow first.
+platform_toolsets:
+  api_server: []
+  cli: []
+mcp_servers: {}
+memory:
+  memory_enabled: false
+  user_profile_enabled: false
+compression:
+  enabled: true
+  threshold_tokens: 24000
+  protect_last_n: 6
+display:
+  interim_assistant_messages: false
+gateway:
+  api_server:
+    host: 127.0.0.1
+    port: 8642
+    model_name: hermes-agent

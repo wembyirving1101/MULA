@@ -1,79 +1,95 @@
-# LARAS
+# Mula / LARAS
 
-A local chat with the Operator AI. The interface uses React and Next.js; the existing
-FastAPI backend talks to `huihui_ai/qwen3-abliterated:latest` through Ollama.
+Mula's Operator chat now uses the actual [Nous Research Hermes Agent](https://github.com/NousResearch/hermes-agent) runtime. LARAS remains the underlying system name.
 
-## Start chatting
-
-Start Ollama and confirm the model is installed with `ollama list`. Then open two terminals.
-
-Backend:
-
-```sh
-cd /Users/rafa/Desktop/LARAS/backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+```text
+Next.js chat → LARAS FastAPI → Hermes gateway → Ollama / Qwen
+                                  │
+                                  └─ Agent loop, session history, context compression
 ```
 
-Frontend (Node.js 22.18 or later):
+The app has simple username/password accounts. Each account owns one persistent Operator conversation, reopened after login or refresh. Sign out replaces New chat. Passwords are hashed and login sessions use private cookies; accounts and the visible chat history are stored in `.runtime/accounts.sqlite3`.
 
-```sh
-cd /Users/rafa/Desktop/LARAS/frontend
-npm install
-npm run dev
+This migration keeps Operator's existing planning scope. Inventory, Procurement, business tools, and autonomous actions have not been implemented. The dedicated Hermes profile starts with no tools and no cross-chat personal memory. This is the runtime foundation for adding scoped specialists later.
+
+## Architecture
+
+See [the current Mula harness architecture](docs/architecture/mula-harness.md) for the account boundary, Operator execution flow, storage, context management and current tool support.
+
+The project groups application code by feature:
+
+```text
+LARAS/
+├── client/
+│   ├── public/                 # Static assets, including the Mula logo
+│   └── src/
+│       ├── app/                # Next.js pages, layout and API route entry points
+│       ├── common/             # Shared components, server proxy, styles and tests
+│       └── features/
+│           ├── auth/           # Account UI
+│           ├── operator/       # Core visualizer, streamed replies and tests
+│           ├── voice/          # Speech playback and tests
+│           └── workspace/      # Workspace screen
+├── server/
+│   ├── src/
+│   │   ├── main.py             # FastAPI composition and health endpoints
+│   │   ├── common/             # Shared configuration and project paths
+│   │   └── features/
+│   │       ├── auth/           # Account storage, HTTP routes and tests
+│   │       ├── operator/       # Agent, runtime adapter, routes, prompt and tests
+│   │       └── voice/          # Speech generation, routes and tests
+│   ├── tests/                  # Shared fixtures and runtime/setup checks
+│   ├── scripts/                # Runtime installation and startup
+│   └── hermes/                 # Pinned runtime profile
+├── scripts/                    # Whole-app launcher
+├── docs/
+└── .runtime/                   # Existing private credentials and durable state
 ```
 
-Open [LARAS chat](http://localhost:3000). Type a message and press Enter. Shift + Enter
-adds a line. Replies appear as they are generated; Stop cancels an active reply.
-New chat clears the screen. Messages stay only in page state and disappear on refresh.
-Each request is independent: include the relevant details again in follow-ups.
+Client features expose their public APIs through `index.ts`; server features expose their integration surfaces through `__init__.py`. Keep feature-specific components, services and tests with their feature. Put code in `common` when multiple features need it. Next.js routing remains in `src/app`, while feature implementations live in `src/features`.
 
-The Next.js server relays requests to FastAPI, so the browser needs no CORS setup.
-To use a different backend address, copy `frontend/.env.example` to
-`frontend/.env.local`, edit `LARAS_BACKEND_URL`, and restart Next.js.
+The former `frontend` and `backend` directories are now `client` and `server`. Restart existing processes after this move. The one-line launcher, ports, HTTP endpoints, account database and runtime profile locations remain compatible. Manual server startup now uses `src.main:app`.
 
-## Qwen responsiveness
+## Run
 
-The backend explicitly disables thinking, requests streaming, keeps the model loaded
-for 15 minutes after use, uses a 4,096-token context, and limits replies to 384 tokens.
-Sampling uses Qwen's non-thinking recommendations. These are defaults for concise
-operational chat, not measured guarantees for every computer.
-
-Override these settings through the backend environment (see `backend/.env.example`):
-
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `OLLAMA_KEEP_ALIVE` | `15m` | Avoid repeated model loads during a chat session |
-| `OLLAMA_NUM_CTX` | `4096` | Bound context memory; minimum 1,024 |
-| `OLLAMA_NUM_PREDICT` | `384` | Bound reply length; increase for longer answers |
-
-Use `uvicorn app.main:app --reload --env-file .env` to explicitly load `backend/.env`.
-A reply that reaches its token limit is labeled as incomplete in the chat.
-The first request after Ollama unloads the model can still be slower. An 8B model's
-generation speed depends on available GPU and memory. Use `ollama ps` to inspect
-whether the model runs on GPU or CPU. No hardware settings are changed automatically.
-
-References: [Ollama chat API](https://docs.ollama.com/api/chat),
-[Ollama runtime configuration](https://docs.ollama.com/faq),
-[Qwen3 non-thinking guidance](https://huggingface.co/Qwen/Qwen3-8B#best-practices).
-
-## Checks
+After the one-time setup in [backend setup](server/README.md), start everything with one line from any Terminal location:
 
 ```sh
-cd /Users/rafa/Desktop/LARAS/backend
-python -m pip install -r requirements-dev.txt
-python -m unittest discover -s tests -v
+bash /Users/rafa/Desktop/LARAS/run.sh
+```
+
+From the project folder, `./run.sh` works too. It starts Ollama if needed, then Hermes, FastAPI and the frontend, waits for them to become reachable, and opens http://127.0.0.1:3000. Existing services are reused. Leave this Terminal open; Ctrl+C stops only services started by this launcher. Logs are written under `.runtime/logs`. Use `./run.sh --no-open` to skip opening the browser.
+
+The launcher uses the existing installation; it reports missing setup instead of downloading dependencies during every launch. If an old backend is still running without account endpoints, stop that Terminal first so port 8000 becomes available. The compact tool-free Operator profile uses the current Qwen model at its 40,960-token window.
+
+## Workspace and AI voice
+
+The workspace uses the supplied Mula logo, a dark charcoal/clay palette, and a layered circular Operator core. The core reacts to the actual playback waveform through Web Audio; reduced-motion preferences keep it still. Expand chat gives the saved conversation more space. Reports, My website and My team are marked as upcoming, since those features are not connected yet.
+
+Voice mode reads each newly completed answer aloud. Select **Chat** or the speaker/mute button to stop audio immediately and disable automatic speech. This preference is remembered in this browser. Existing history is never read automatically; **Play reply** replays an answer when voice is enabled. Sending another message, signing out or hiding the tab stops current playback. Voice output is TTS only; microphone input is not implemented.
+
+After updating from the text-only version, restart the running backend before using voice; the launcher deliberately reuses existing services, so an old process will not load the new speech endpoint automatically.
+
+The initial free provider is macOS's built-in `say` engine on the backend machine, using its configured system voice. No paid API, model download or new dependency is required. Audio is generated in a private temporary directory, returned as uncached WAV through the authenticated `/api/speech` proxy, and deleted after generation. The frontend removes code/Markdown syntax and splits long answers into chunks; each speech request is limited to 1,200 characters, one synthesis job per backend process, with a 30-second generation timeout. Muting cancels client requests and playback; an already running server job can finish within that bound if its connection closes. Replies remain readable if voice fails.
+
+This provider needs **a macOS backend**; browsers on other devices can use that backend. A Linux/GPU production deployment needs a replacement speech provider. The endpoint does not forward conversation text to a third-party TTS service. Speech starts after the text reply completes, and long replies may pause between chunks. Browser audio permission is unlocked by Send/Voice/Play reply interactions.
+
+## Verify
+
+```sh
+cd server
+.venv/bin/python -m unittest discover -s . -t . -v
 ```
 
 ```sh
-cd /Users/rafa/Desktop/LARAS/frontend
+cd client
 npm run typecheck
-node --experimental-strip-types --test tests/stream.test.mjs
+npm test
 npm run build
 ```
 
-For production frontend mode, run `npm run build` then `npm start`. Keep FastAPI and
-Ollama running locally. There are no business actions, specialist agents, persistent
-memory, database, authentication, permissions, or external integrations.
+The backend tests simulate the documented Hermes HTTP boundary, including session routing, interrupted streams, authentication failures, reasoning filtering and cancellation. They do not substitute for a live Hermes/model test.
+
+## Deployment boundary
+
+This version provides local accounts and server-enforced conversation ownership. One account represents one workspace. Employee invitations, roles, password recovery and separate Hermes memory profiles are not implemented yet. Cross-chat personal memory remains disabled until profile isolation is implemented. For HTTPS hosting, set `LARAS_SECURE_COOKIES=true`, protect the database and keep Hermes private.

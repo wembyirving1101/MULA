@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="626" height="433" viewBox="314 419 626 433" role="img" aria-labelledby="title desc">
+  <title id="title">Mula striped dawn app icon</title>
+  <desc id="desc">An muted clay sun divided by three horizon cuts, above a rounded horizon line on charcoal.</desc>
+  <defs>
+    <clipPath id="sun-bands">
+      <path d="M380 419h494v177H380zM380 614h494v46H380zM380 678h494v46H380zM380 742h494v46H380z"/>
+    </clipPath>
+  </defs>
+  <g fill="#CF947A">
+    <circle cx="627" cy="664" r="245" clip-path="url(#sun-bands)"/>
+    <rect x="314" y="806" width="626" height="46" rx="23"/>
+  </g>
+</svg>
