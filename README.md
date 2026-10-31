@@ -20,35 +20,36 @@ The project groups application code by feature:
 
 ```text
 LARAS/
-├── client/
-│   ├── public/                 # Static assets, including the Mula logo
-│   └── src/
-│       ├── app/                # Next.js pages, layout and API route entry points
-│       ├── common/             # Shared components, server proxy, styles and tests
-│       └── features/
-│           ├── auth/           # Account UI
-│           ├── operator/       # Core visualizer, streamed replies and tests
-│           ├── voice/          # Speech playback and tests
-│           └── workspace/      # Workspace screen
-├── server/
+├── public/                     # Static assets, including the Mula logo
+├── src/
+│   ├── app/                     # Next.js routes, layout and API entry points
+│   ├── common/
+│   │   ├── components/          # Shared UI components
+│   │   ├── hooks/               # Shared hooks
+│   │   ├── services/            # Shared server proxy
+│   │   ├── styles/              # Global styles and theme
+│   │   └── tests/
+│   └── features/
+│       ├── auth/                # Account UI and public index.ts
+│       ├── operator/            # Core visualizer, streaming and tests
+│       ├── voice/               # Speech playback and tests
+│       └── workspace/           # Workspace screen
+├── server/                     # Separate Python service
 │   ├── src/
-│   │   ├── main.py             # FastAPI composition and health endpoints
-│   │   ├── common/             # Shared configuration and project paths
-│   │   └── features/
-│   │       ├── auth/           # Account storage, HTTP routes and tests
-│   │       ├── operator/       # Agent, runtime adapter, routes, prompt and tests
-│   │       └── voice/          # Speech generation, routes and tests
-│   ├── tests/                  # Shared fixtures and runtime/setup checks
-│   ├── scripts/                # Runtime installation and startup
-│   └── hermes/                 # Pinned runtime profile
+│   │   ├── main.py
+│   │   ├── common/
+│   │   └── features/            # Auth, Operator and voice routes/services/tests
+│   ├── tests/
+│   ├── scripts/
+│   └── hermes/
 ├── scripts/                    # Whole-app launcher
 ├── docs/
-└── .runtime/                   # Existing private credentials and durable state
+└── .runtime/                   # Private configuration and durable state
 ```
 
 Client features expose their public APIs through `index.ts`; server features expose their integration surfaces through `__init__.py`. Keep feature-specific components, services and tests with their feature. Put code in `common` when multiple features need it. Next.js routing remains in `src/app`, while feature implementations live in `src/features`.
 
-The former `frontend` and `backend` directories are now `client` and `server`. Restart existing processes after this move. The one-line launcher, ports, HTTP endpoints, account database and runtime profile locations remain compatible. Manual server startup now uses `src.main:app`.
+The client application now lives at the repository root, with top-level `public/` and `src/`. The Python service lives in `server/`. Restart existing processes after this move. The one-line launcher, ports, HTTP endpoints, account database and runtime profile locations remain compatible. Manual server startup now uses `src.main:app`.
 
 ## Run
 
@@ -82,7 +83,7 @@ cd server
 ```
 
 ```sh
-cd client
+# From the repository root
 npm run typecheck
 npm test
 npm run build

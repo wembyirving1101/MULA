@@ -66,7 +66,7 @@ cd server
 
 ```sh
 # 4. Existing UI.
-cd client
+# From the repository root
 npm run dev
 ```
 

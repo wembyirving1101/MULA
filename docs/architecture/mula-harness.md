@@ -52,7 +52,7 @@ Stop closes the stream toward the runtime, which cooperatively interrupts genera
 
 After a successful text stream completes, voice mode strips Markdown/code from the reply and splits prose into bounded chunks. The browser calls `POST /api/speech` through the existing same-origin proxy and account-cookie boundary. FastAPI validates a maximum of 1,200 characters per request and uses the backend Mac's `say` executable to generate WAV audio. This is a presentation path, not an LLM tool call; it does not add messages to either conversation store or send a second model request.
 
-`client/src/features/voice/services/speech.ts` decodes each returned WAV with Web Audio and connects a buffer source through an analyser to the output device. `OperatorCore.tsx` samples that analyser to animate the central core and rings. Reduced-motion mode keeps the drawing still. A generation counter invalidates pending fetch/decode work when playback is cancelled, preventing audio from starting after mute. New messages, tab hiding and sign-out stop current playback. Chat mode disables automatic speech and is persisted per browser in `localStorage`; loaded history never auto-plays.
+`src/features/voice/services/speech.ts` decodes each returned WAV with Web Audio and connects a buffer source through an analyser to the output device. `OperatorCore.tsx` samples that analyser to animate the central core and rings. Reduced-motion mode keeps the drawing still. A generation counter invalidates pending fetch/decode work when playback is cancelled, preventing audio from starting after mute. New messages, tab hiding and sign-out stop current playback. Chat mode disables automatic speech and is persisted per browser in `localStorage`; loaded history never auto-plays.
 
 The initial provider uses private temporary files, no shell, no external TTS API, uncached responses, one active synthesis job per process and a 30-second timeout. Temporary audio is deleted after reading. Closing a client connection does not guarantee immediate server-job cancellation, but the bounded job cannot resume playback in the cancelled client. The macOS provider must be replaced for a Linux production backend. Speech begins after reply completion, with possible pauses between chunks; microphone input is not included.
 
@@ -101,10 +101,10 @@ The launcher reuses reachable services, starts missing ones, waits for readiness
 
 ## Source map
 
-- `client/src/features/workspace/components/Workspace.tsx`: account loading, permanent chat and streamed UI.
-- `client/src/features/auth/components/AccountForm.tsx`: sign-up and sign-in.
-- `client/src/common/services/server-proxy.ts`: server proxy and cookie forwarding.
-- `client/src/features/voice/services/speech.ts` and `client/src/features/operator/components/OperatorCore.tsx`: cancellable playback and audio visualization.
+- `src/features/workspace/components/Workspace.tsx`: account loading, permanent chat and streamed UI.
+- `src/features/auth/components/AccountForm.tsx`: sign-up and sign-in.
+- `src/common/services/server-proxy.ts`: server proxy and cookie forwarding.
+- `src/features/voice/services/speech.ts` and `src/features/operator/components/OperatorCore.tsx`: cancellable playback and audio visualization.
 - `server/src/features/voice/service.py`: bounded local macOS speech synthesis.
 - `server/src/main.py`: application composition, validation-error handling and health checks.
 - `server/src/features/auth/routes.py`: account HTTP endpoints.
@@ -460,8 +460,8 @@ Application references:
 - `server/src/features/operator/routes.py`: `chat_with_operator()`, `operator_events()`, `conversation()`.
 - `server/src/features/operator/agent.py`: `operator_reply()`, `operator_stream()` and loading `operator.md`.
 - `server/src/features/operator/runtime.py`: `request_headers()`, `stream_chat()`, `sse_events()`, `chat()`.
-- `client/src/common/services/server-proxy.ts`: `proxyBackend()`.
-- `client/src/features/workspace/components/Workspace.tsx`: `loadAccount()`, `sendMessage()` and `readChatStream()` usage.
+- `src/common/services/server-proxy.ts`: `proxyBackend()`.
+- `src/features/workspace/components/Workspace.tsx`: `loadAccount()`, `sendMessage()` and `readChatStream()` usage.
 
 Pinned runtime references, relative to `.runtime/hermes-source`:
 

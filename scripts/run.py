@@ -70,7 +70,7 @@ def main():
     env_file = ROOT / "server/.env.hermes"
     required = [env_file, ROOT / "server/.venv/bin/python",
                 ROOT / ".runtime/hermes-source/.hermes/bin/hermes",
-                ROOT / "client/node_modules/next/dist/bin/next"]
+                ROOT / "node_modules/next/dist/bin/next"]
     for path in required:
         if not path.exists():
             raise RuntimeError(f"Setup is missing: {path}. Follow server/README.md first.")
@@ -96,8 +96,8 @@ def main():
                    "--host", "127.0.0.1", "--port", "8000", "--env-file", str(env_file)],
                    ROOT / "server", lambda: responds("http://127.0.0.1:8000/health")
                    and responds("http://127.0.0.1:8000/api/auth/me", statuses=(401,)), stack, children)
-            launch("Client", ["node", str(ROOT / "client/node_modules/next/dist/bin/next"),
-                   "dev", "--hostname", "127.0.0.1", "--port", "3000"], ROOT / "client",
+            launch("Client", ["node", str(ROOT / "node_modules/next/dist/bin/next"),
+                   "dev", "--hostname", "127.0.0.1", "--port", "3000"], ROOT,
                    lambda: responds("http://127.0.0.1:3000/") and
                    responds("http://127.0.0.1:3000/api/auth/me", statuses=(401,)), stack, children)
             print("\nMula is ready: http://127.0.0.1:3000\nPress Ctrl+C to stop services started by this command.", flush=True)
