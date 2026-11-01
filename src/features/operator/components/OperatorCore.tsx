@@ -23,6 +23,7 @@ export default function OperatorCore({ analyser }: { analyser: AnalyserNode | nu
       lastFrame = time;
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
       const size = element.clientWidth;
+      if (!size) return;
       if (element.width !== Math.round(size * ratio)) {
         element.width = Math.round(size * ratio);
         element.height = element.width;
@@ -37,23 +38,28 @@ export default function OperatorCore({ analyser }: { analyser: AnalyserNode | nu
         energy = Math.min(1, Math.sqrt(energy / samples.length) * 4);
       }
       level += (energy - level) * 0.22;
-      let phase = time / 4500;
+      let phase = time / 1800;
       let amplitude = level;
       if (motion.matches) { phase = 0; amplitude = 0; }
 
       context.translate(200, 200);
-      // Quiet organic drift is distinct from the larger, measured audio response.
+      // Counter-rotating layers and breathing keep the quiet state visibly alive.
+      // Speech still adds measured energy on top of this ambient motion.
       for (let layer = 0; layer < 6; layer += 1) {
-        const base = 145 + layer * 5;
+        let direction = 1;
+        if (layer % 2 === 0) direction = -1;
+        const rotation = phase * direction * (0.12 + layer * 0.025);
+        const breath = Math.sin(phase * 1.3 + layer * 0.55) * 4;
+        const base = 139 + layer * 5 + breath;
         context.beginPath();
         for (let point = 0; point <= 240; point += 1) {
           const angle = point / 240 * Math.PI * 2;
           const bin = frequencies[point % 100] / 255;
-          const ripple = Math.sin(angle * 5 + phase + layer * 0.65) * (3 + amplitude * 13)
-            + Math.sin(angle * 8 - phase * 0.7 + layer) * (2 + amplitude * bin * 13);
+          const ripple = Math.sin(angle * 5 + phase + layer * 0.65) * (6 + amplitude * 10)
+            + Math.sin(angle * 8 - phase * 0.7 + layer) * (4 + amplitude * bin * 10);
           const radius = base + ripple;
-          const x = Math.cos(angle) * radius;
-          const y = Math.sin(angle) * radius;
+          const x = Math.cos(angle + rotation) * radius;
+          const y = Math.sin(angle + rotation) * radius;
           if (point === 0) context.moveTo(x, y);
           else context.lineTo(x, y);
         }
@@ -62,16 +68,19 @@ export default function OperatorCore({ analyser }: { analyser: AnalyserNode | nu
         context.lineWidth = 1.1;
         if (layer === 2 || layer === 4) context.setLineDash([1, 5]);
         else context.setLineDash([]);
+        context.lineDashOffset = -phase * direction * 9;
         context.stroke();
       }
       context.setLineDash([1, 7]);
       context.strokeStyle = "#b47b58";
       for (const radius of [61, 117]) {
+        context.lineDashOffset = phase * radius * 0.12;
         context.beginPath();
         context.arc(0, 0, radius + amplitude * 4, 0, Math.PI * 2);
         context.stroke();
       }
       context.setLineDash([]);
+      context.lineDashOffset = 0;
       const coreRadius = 36 + amplitude * 7;
       context.beginPath();
       context.arc(0, 0, coreRadius, 0, Math.PI * 2);

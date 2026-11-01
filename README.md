@@ -33,6 +33,7 @@ LARAS/
 │       ├── auth/                # Account UI and public index.ts
 │       ├── operator/            # Core visualizer, streaming and tests
 │       ├── voice/               # Speech playback and tests
+│       ├── team/                # AI office, role inspector and browser checks
 │       └── workspace/           # Workspace screen
 ├── server/                     # Separate Python service
 │   ├── src/
@@ -65,7 +66,9 @@ The launcher uses the existing installation; it reports missing setup instead of
 
 ## Workspace and AI voice
 
-The workspace uses the supplied Mula logo, a dark charcoal/clay palette, and a layered circular Operator core. The core reacts to the actual playback waveform through Web Audio; reduced-motion preferences keep it still. Expand chat gives the saved conversation more space. Reports, My website and My team are marked as upcoming, since those features are not connected yet.
+The workspace uses the supplied Mula logo, a dark charcoal/clay palette, and a layered circular Operator core. Its rings breathe and counter-rotate while idle, with additional movement driven by the actual playback waveform through Web Audio; reduced-motion preferences keep it still. Expand chat gives the saved conversation more space. Reports and My website remain marked as upcoming.
+
+**My team** (`/team`) opens an account-gated, flat office view with selectable teammates and a role inspector. The Operator is available for planning and guidance. Inventory, Forecasting, Procurement, Customer service and Website are clearly marked as planned; the dashed paths illustrate future collaboration rather than live task activity. The mobile layout uses a compact station grid and brings selected role details into view. This page does not enable specialist execution, hiring or delegation.
 
 Voice mode reads each newly completed answer aloud. Select **Chat** or the speaker/mute button to stop audio immediately and disable automatic speech. This preference is remembered in this browser. Existing history is never read automatically; **Play reply** replays an answer when voice is enabled. Sending another message, signing out or hiding the tab stops current playback. Voice output is TTS only; microphone input is not implemented.
 
@@ -88,6 +91,8 @@ npm run typecheck
 npm test
 npm run build
 ```
+
+Optional UI regression: with a preview running on port 3001 and Playwright available, run `node src/features/team/tests/browser.spec.mjs`. `MULA_TEST_URL` overrides the preview address, `MULA_PLAYWRIGHT_MODULE` can point to an existing Playwright module, and `MULA_BROWSER_PATH` can select an installed browser. The check uses mocked account responses and covers idle/reduced motion, navigation, role selection, responsive layouts and sign-out without creating accounts.
 
 The backend tests simulate the documented Hermes HTTP boundary, including session routing, interrupted streams, authentication failures, reasoning filtering and cancellation. They do not substitute for a live Hermes/model test.
 

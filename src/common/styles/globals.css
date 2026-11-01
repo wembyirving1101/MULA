@@ -169,3 +169,8 @@ h3 { font-size: 19px; letter-spacing: -.4px; line-height: 1.4; font-weight: 500;
   .account-card { padding: 28px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+.mobile-team-link { display: none; }
+@media (max-width: 650px) {
+  .mobile-team-link { display: inline-block; color: var(--clay); font-size: 12px; text-decoration: none; padding: 8px; }
+}

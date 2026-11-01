@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent } from "react";
 import { AccountForm } from "@/features/auth";
 import Markdown from "react-markdown";
-import { Icon } from "@/common/components";
+import { Icon, Sidebar } from "@/common/components";
 import { MulaLogo } from "@/common/components";
 import { OperatorCore } from "@/features/operator";
 import { SpeechPlayer } from "@/features/voice";
@@ -259,27 +259,12 @@ export default function Workspace() {
 
   return (
     <div className="app-shell">
-      <aside className="sidebar">
-        <a className="brand" href="/" aria-label="Mula home"><MulaLogo /></a>
-        <div className="sidebar-caption">A little support. A new beginning.</div>
-        <nav aria-label="Main navigation">
-          <a className="nav-item active-nav" href="/" aria-current="page"><Icon name="home" />Workspace<span className="nav-dot" /></a>
-          <button className="nav-item" disabled title="Reports are coming soon"><Icon name="report" />Reports<span className="soon">Soon</span></button>
-          <button className="nav-item" disabled title="Website builder is coming soon"><Icon name="website" />My website<span className="soon">Soon</span></button>
-          <button className="nav-item" disabled title="The agent office is coming soon"><Icon name="team" />My team<span className="soon">Soon</span></button>
-        </nav>
-        <div className="sidebar-note"><span className="tiny-sun" aria-hidden="true">◒</span><p>Big things begin<br />with a small step.</p></div>
-        <div className="sidebar-bottom">
-          <span className="avatar">{account.username.slice(0, 1).toUpperCase()}</span>
-          <div><strong>{account.username}</strong><span>Your workspace</span></div>
-          <button className="icon-button signout" aria-label="Sign out" onClick={signOut} disabled={busy}><Icon name="exit" /></button>
-        </div>
-      </aside>
+      <Sidebar active="workspace" username={account.username} onSignOut={signOut} busy={busy} />
 
       <main className={mainClass}>
         <header className="topbar">
           <div className="workspace-title"><span className="mobile-brand"><MulaLogo /></span><span className="desktop-title">Your workspace <span className="header-divider">/</span> <strong>Operator</strong></span></div>
-          <div className="topbar-actions"><span className="preview-badge">EARLY PREVIEW</span><button className="mobile-signout icon-button" aria-label="Sign out" onClick={signOut} disabled={busy}><Icon name="exit" /></button></div>
+          <div className="topbar-actions"><a className="mobile-team-link" href="/team">My team</a><span className="preview-badge">EARLY PREVIEW</span><button className="mobile-signout icon-button" aria-label="Sign out" onClick={signOut} disabled={busy}><Icon name="exit" /></button></div>
         </header>
 
         <section className="operator-stage" aria-label="Your Operator">
